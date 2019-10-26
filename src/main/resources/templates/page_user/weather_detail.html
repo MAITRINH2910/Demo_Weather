@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" id="location" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Forecast</title>
+    <meta name="description" content="city | Weather Forecast  Next 5 days">
+    <link rel="shortcut icon" href="https://cdn.pixabay.com/photo/2013/07/12/18/41/weather-153703_640.png">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href='css/weather.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href='/css/weather_detail.css'>
+    <style>
+        .navbar{
+            background-image: linear-gradient(#426b82, #2fa4e7 60%, #1d9ce5);
+        }
+        .table td, .table th {
+            padding: 9px !important;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+        p{
+            margin-bottom: 0px !important;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" th:href="@{/}"> <img src="https://cdn.pixabay.com/photo/2013/07/12/18/41/weather-153703_640.png" height="35px"/>
+        <span style="font-family: FreeMono, monospace">Ur-Weather</span>
+        </a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}"> <i class="fa fa-heart"></i>Visit Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+<!--        <form class="form-inline my-2 my-lg-0">-->
+<!--            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>-->
+<!--        </form>-->
+    </div>
+</nav>
+<div class="allContent">
+
+    <div class="container ltr" lang="en" dir="ltr">
+        <div class="cur-wea" th:object="${currentWeather}">
+            <div class="current-weather">
+                <div class="col-sm-1"></div>
+                <h1><b th:text="*{cityName}"></b></h1>
+
+                <div class="current-icon">
+                    <div class="icon">
+                        <div class="w-icon iconvault partly-cloudy-day">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"
+                                 enable-background="new 0 0 300 300">
+                                <img class="cur-icon" th:src="'http://openweathermap.org/img/w/'+*{icon}+'.png'">
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="current-conditions">
+                    <div class="temp" th:text="*{temp}+'&deg;C'"></div>
+                    <div class="summary" th:text="*{description}" style="margin-top: 5px"></div>
+                </div>
+
+            </div>
+            <div class="current-more-info">
+                <p th:text="*{#calendars.format(date,'dd-MMM-yyyy')}" style="margin-left: 235px; margin-top: -50px"></p>
+                <br>
+                <ul>
+                    <li>humidity: <span th:text="*{humidity}+' %'"></span></li>
+                    <li>wind: <span th:text="*{wind}+' m/s'"></span></li>
+                    <li>pressure: <span th:text="*{pressure}+' hpa'"></span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <!--            <div class="forecast-summary">-->
+            <!--                <h2>Next 5 days:</h2>-->
+            <!--            </div>-->
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="box col-md-12">
+                        <div class="box-inner chung">
+                            <div class="table-responsive">
+                            <table class="table table-striped" >
+                                <th:block th:each="detail : ${detail}">
+                                    <tr class="detailDB" th:object="${detail}">
+                                        <td class="icon_rps" style="width: 100px; height: 50px">
+                                            <img style="margin-left:10px;" th:src="*{icon}" class="icon">
+                                        </td>
+                                        <td class="city_rps" style="width: 200px; height: 50px">
+                                            <b><p class="nameCity" th:text="*{cityName}"></p></b>
+                                            <p th:text="*{#dates.format(date, 'dd-MM-yyyy')}"
+                                               style="color: black"></p>
+                                        </td>
+                                        <td class="temp_rps">
+                                            <!--                                                        <div class="property">-->
+                                            <div class="badge badge-info"
+                                                 th:text="*{temp}+'°С'"></div>
+                                            <b><i id="descript_rps" th:text="*{description}"
+                                                  style="color: black"></i></b>
+                                            <p style="color: black" class="general_rps hidden-xs"
+                                               th:text="*{wind}+'m/s &nbsp;  '+ *{humidity}+'% &nbsp; '+*{pressure}+'hpa. '">
+                                                <!--                                                        </div>-->
+                                        </td>
+                                    </tr>
+                                </th:block>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

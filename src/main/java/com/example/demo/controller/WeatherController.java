@@ -19,7 +19,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -74,9 +73,9 @@ public class WeatherController {
             model.addAttribute("currentWeather", currentWeather);
             // Show History Weathers
             UserEntity user = userService.getAuthUser();
-            List<WeatherEntity> listCity = weatherService.getCitiesByUser(user);
+            List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
             model.addAttribute("listCities", listCity);
-            List<List<WeatherEntity>> weatherGroupByCity = weatherService.weatherGroupByCity(user);
+            List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
             model.addAttribute("weatherList0", weatherGroupByCity);
         } catch (Exception e) {
             model.addAttribute("message", "City is not found!!!");
@@ -157,11 +156,11 @@ public class WeatherController {
             String pressure = futureWeather.getList().get(j).getMain().getPressure();
             String wind = futureWeather.getList().get(j).getWind().getSpeed();
             Double temp = futureWeather.getList().get(j).getMain().getTemp();
-            String temp_min = futureWeather.getList().get(j).getMain().getTemp_min();
-            String temp_max = futureWeather.getList().get(j).getMain().getTemp_max();
+            Double temp_min = futureWeather.getList().get(j).getMain().getTemp_min();
+            Double temp_max = futureWeather.getList().get(j).getMain().getTemp_max();
             String city1 = futureWeather.getCity().getName();
             Date date = CommonUtil.stringToDate(futureWeather.getList().get(j).getDt_txt());
-            WeatherEntity detail = new WeatherEntity(icon, city1, temp, clouds, wind, humidity, pressure, date);
+            WeatherEntity detail = new WeatherEntity(icon, city1, clouds, wind, humidity, pressure, date, temp_min, temp_max);
             futureWeatherList.add(detail);
         }
         model.addAttribute("detail", futureWeatherList);

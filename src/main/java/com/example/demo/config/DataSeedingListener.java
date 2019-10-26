@@ -17,6 +17,9 @@ import java.util.HashSet;
 /**
  * The DataSeedingListener class is used to illustrate:
  * 1. Create Default Admin for the first time start server
+ * This allows MyListener to be notified when the context has refreshed
+ * One can use that to run arbitrary code when the application context has fully started
+ *  Với tham số ContextRefreshedEvent, đoạn code trong onApplicationEvent() sẽ được publish khi Spring Context start hoặc refresh.
  */
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {

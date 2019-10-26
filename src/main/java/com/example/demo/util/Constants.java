@@ -1,5 +1,8 @@
 package com.example.demo.util;
 
+/**
+ * This class is used to created descriptive variables
+ */
 public class Constants {
     public static final boolean ACTIVE = true;
     public static final boolean UN_ACTIVE = false;

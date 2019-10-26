@@ -39,9 +39,9 @@ public class HomeController {
     @GetMapping
     public String homePage(Model model) {
         UserEntity user = userService.getAuthUser();
-        List<WeatherEntity> listCity = weatherService.getCitiesByUser(user);
+        List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
         model.addAttribute("listCities", listCity);
-        List<List<WeatherEntity>> weatherGroupByCity = weatherService.weatherGroupByCity(user);
+        List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
         model.addAttribute("weatherList0", weatherGroupByCity);
         return "page_user/weather_search";
     }
@@ -55,7 +55,7 @@ public class HomeController {
     @GetMapping("/local-weather")
     @ResponseBody
     public WeatherDTO forecastCurrentWeather(@RequestParam String lat, @RequestParam String lon) {
-        return weatherService.getCurrentLocalWeather(lat, lon);
+        return weatherService.getJsonLocalWeather(lat, lon);
     }
 }
 

@@ -44,9 +44,6 @@
                 <a class="nav-link" th:href="@{/}"> <i class="fa fa-heart"></i>Visit Home <span class="sr-only">(current)</span></a>
             </li>
         </ul>
-<!--        <form class="form-inline my-2 my-lg-0">-->
-<!--            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>-->
-<!--        </form>-->
     </div>
 </nav>
 <div class="allContent">
@@ -103,13 +100,15 @@
                                         </td>
                                         <td class="city_rps" style="width: 200px; height: 50px">
                                             <b><p class="nameCity" th:text="*{cityName}"></p></b>
-                                            <p th:text="*{#dates.format(date, 'dd-MM-yyyy')}"
+                                            <p th:text="*{#calendars.format(date, 'dd-MM-yyyy')}"
                                                style="color: black"></p>
                                         </td>
                                         <td class="temp_rps">
                                             <!--                                                        <div class="property">-->
-                                            <div class="badge badge-info"
-                                                 th:text="*{temp}+'°С'"></div>
+<!--                                            <div class="badge badge-info"-->
+<!--                                                 th:text="*{temp}+'°С'"></div>-->
+                                            <div class="badge badge-info" th:text="*{tempMin}+'&deg;C'"></div>
+                                            <div class="badge badge-warning" th:text="*{tempMax}+'&deg;C'"></div>
                                             <b><i id="descript_rps" th:text="*{description}"
                                                   style="color: black"></i></b>
                                             <p style="color: black" class="general_rps hidden-xs"

@@ -19,21 +19,21 @@ public interface WeatherService {
 
     List<WeatherEntity> getWeatherByUser(UserEntity user);
 
-    // Query Database to find City
-    List<WeatherEntity> findCityByUserId(Long userId);
-
-    // Query Database to find weather which is grouped by city
-    List<WeatherEntity> findWeatherGroupByCity(String city, Long userId);
-
-    WeatherDTO getCurrentLocalWeather(String lat, String lon);
+    WeatherDTO getJsonLocalWeather(String lat, String lon);
 
     WeatherDetailDTO getJsonWeatherDetail(String cityName);
 
     WeatherEntity getJsonWeatherSearch(String cityName);
 
-    List<WeatherEntity> getCitiesByUser(UserEntity user);
+    // Query Database to find City
+    List<WeatherEntity> getListCityByUserId(Long userId);
 
-    List<List<WeatherEntity>> weatherGroupByCity(UserEntity user);
+    // Query Database to find weather which is grouped by city
+    List<WeatherEntity> getListWeatherGroupByUserAndCity(String city, Long userId);
+
+    List<WeatherEntity> getListCityByUser(UserEntity user);
+
+    List<List<WeatherEntity>> getListWeatherGroupByCity(UserEntity user);
 
     WeatherEntity filterWeatherByCity(String cityName);
 }

@@ -79,7 +79,7 @@ public class WeatherServiceImpl implements WeatherService {
      * @return
      */
     @Override
-    public List<WeatherEntity> findCityByUserId(Long userId) {
+    public List<WeatherEntity> getListCityByUserId(Long userId) {
         return weatherRepository.findCity(userId);
     }
 
@@ -90,7 +90,7 @@ public class WeatherServiceImpl implements WeatherService {
      * @return
      */
     @Override
-    public List<WeatherEntity> findWeatherGroupByCity(String city, Long userId) {
+    public List<WeatherEntity> getListWeatherGroupByUserAndCity(String city, Long userId) {
         return weatherRepository.findWeatherGroupByCity(city, userId);
     }
 
@@ -133,7 +133,7 @@ public class WeatherServiceImpl implements WeatherService {
      * @return
      */
     @Override
-    public WeatherDTO getCurrentLocalWeather(String lat, String lon) {
+    public WeatherDTO getJsonLocalWeather(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();
         WeatherDTO weatherDTO = restTemplate.getForObject(urlApiGetCurrentLocation(lat, lon).toString(), WeatherDTO.class);
         return weatherDTO;
@@ -191,7 +191,7 @@ public class WeatherServiceImpl implements WeatherService {
      * @param user
      * @return
      */
-    public List<WeatherEntity> getCitiesByUser(UserEntity user) {
+    public List<WeatherEntity> getListCityByUser(UserEntity user) {
         List<WeatherEntity> cityList = weatherRepository.findCity(user.getId());
         return cityList;
     }
@@ -202,7 +202,7 @@ public class WeatherServiceImpl implements WeatherService {
      * @param user
      * @return
      */
-    public List<List<WeatherEntity>> weatherGroupByCity(UserEntity user) {
+    public List<List<WeatherEntity>> getListWeatherGroupByCity(UserEntity user) {
         List<WeatherEntity> cityList = weatherRepository.findCity(user.getId());
         List<List<WeatherEntity>> weatherGroupByCity = new ArrayList<>();
         for (int i = 0; i < cityList.size(); i++) {

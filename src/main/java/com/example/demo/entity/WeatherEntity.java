@@ -42,10 +42,10 @@ public class WeatherEntity {
 
 
     @Column(name = "tempMin")
-    private String tempMin;
+    private Double tempMin;
 
     @Column(name = "tempMax")
-    private String tempMax;
+    private Double tempMax;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -65,7 +65,7 @@ public class WeatherEntity {
         this.date = date;
     }
 
-    public WeatherEntity(String icon, String cityName, String description, String wind, String humidity, String pressure, Date date, String tempMin, String tempMax) {
+    public WeatherEntity(String icon, String cityName, String description, String wind, String humidity, String pressure, Date date, Double tempMin, Double tempMax) {
         this.icon = icon;
         this.cityName = cityName;
         this.date = date;

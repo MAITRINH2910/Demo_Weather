@@ -54,11 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(customFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(
-                        "/registration",
+                        "/registration", "/login",
                         "/forgot-password**",
                         "/reset-password**")
                 .permitAll()
-                .antMatchers("/","search-city/**")
+                .antMatchers("/", "search-city/**")
                 .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**")
                 .hasRole("ADMIN")
@@ -71,10 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(failureHandler)
                 .and()
                 .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutUrl("/logout")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403");

@@ -50,7 +50,7 @@
                             </div>
                             <!--Body-->
                             <form autocomplete="off" th:action="@{/login}" name='f' onsubmit="return validate()"
-                                  th:object="${userForm}" method="POST" class="form-horizontal" role="form">
+                                  method="POST" class="form-horizontal" role="form">
                                 <div th:if="${param.logout}">
                                     <div class="alert alert-info">You have been logged out.</div>
                                 </div>
@@ -58,26 +58,18 @@
                                     <div class="alert alert-info"><span class="glyphicon glyphicon-ok-sign"></span>
                                         <b style="font-size: 15px">Registered Successfully.</b></div>
                                 </div>
-                                <div class="md-form"
-                                     th:classappend="${#fields.hasErrors('username')}? 'has-error':''">
+                                <div class="md-form">
                                     <i class="fas fa-user prefix white-text active"></i>
                                     <label for="form3" class="active">Username</label>
-                                    <input type="text" id="form3" name="username" th:field="*{username}"
+                                    <input type="text" id="form3" name="username"
                                            class="white-text form-control username">
-                                    <p class="error-message" style="color: red;"
-                                       th:each="error : ${#fields.errors('username')}"
-                                       th:text="${error}">Validation error</p>
                                     <div class="error" id="nameErr"></div>
                                 </div>
-                                <div class="md-form"
-                                     th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                                <div class="md-form">
                                     <i class="fas fa-lock prefix white-text active"></i>
                                     <label for="form4">Password</label>
-                                    <input type="password" id="form4" name="password" th:field="*{password}"
+                                    <input type="password" id="form4" name="password"
                                            class="white-text form-control">
-                                    <p class="error-message" style="color: red"
-                                       th:each="error : ${#fields.errors('password')}"
-                                       th:text="${error}">Validation error</p>
                                     <div class="error" id="pwErr"></div>
                                 </div>
                                 <div class="pass-restore" style="text-align: right">
@@ -88,9 +80,7 @@
                                 <div class="error" id="bothErr"></div>
 
                                 <div th:if="${param.error}">
-                                    <div class="alert alert-danger" th:text="${errorMessage}">
-                                        <!--                                            Invalid username or password.-->
-                                    </div>
+                                    <div class="alert alert-danger">Invalid username or password!</div>
                                 </div>
 
                                 <div class="text-center mt-4">

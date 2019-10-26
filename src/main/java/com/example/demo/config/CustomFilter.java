@@ -62,12 +62,4 @@ public class CustomFilter extends GenericFilterBean {
         }
         chain.doFilter(req, res);
     }
-
-    private CustomFilter(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-    private CustomFilter() {
-    }
-
 }

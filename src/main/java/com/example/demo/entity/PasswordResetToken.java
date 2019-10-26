@@ -1,10 +1,15 @@
 package com.example.demo.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class PasswordResetToken {
 
     @Id
@@ -20,38 +25,6 @@ public class PasswordResetToken {
 
     @Column(nullable = false)
     private Date expiryDate;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public Date getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
-    }
 
     public void setExpiryDate(int minutes) {
         Calendar now = Calendar.getInstance();

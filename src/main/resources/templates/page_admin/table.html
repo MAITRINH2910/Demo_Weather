@@ -43,10 +43,10 @@
 
 
     <style>
-    .navbar {
-        background-image: linear-gradient(#426b82, #2fa4e7 60%, #1d9ce5);
-    }
-</style>
+        .navbar {
+            background-image: linear-gradient(#426b82, #2fa4e7 60%, #1d9ce5);
+        }
+    </style>
 <body>
 <!-- topbar starts -->
 <div class="navbar navbar-default" role="navigation">
@@ -64,13 +64,9 @@
         <!-- user dropdown starts -->
         <div class="btn-group pull-right">
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <i class="glyphicon glyphicon-user"
-                ><span
-                        class="hidden-sm hidden-xs" th:utext="${#request.userPrincipal.name}"
-                ></span></i>
-                <!--                <i class="glyphicon glyphicon-user"-->
-                <!--                   th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><span class="hidden-sm hidden-xs"-->
-                <!--                > User</span></i>-->
+                <i class="glyphicon glyphicon-user">
+                    <span class="hidden-sm hidden-xs" th:utext="${#request.userPrincipal.name}"></span>
+                </i>
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -109,20 +105,6 @@
 
         <ul class="collapse navbar-collapse nav navbar-nav top-menu">
             <li><a th:href="@{/}"><i class="glyphicon glyphicon-globe"></i> Visit Site</a></li>
-
-            <li class="dropdown">
-                <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-star"></i> Dropdown <span
-                        class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                </ul>
-            </li>
         </ul>
 
     </div>
@@ -209,9 +191,9 @@
                                     </td>
                                     <td class="center">
                                         <a class="btn btn-danger deleteAccount"
-                                                th:href="@{/admin/delete/__${user.id}__}"
-                                                onclick="return confirm('Do you want to delete this account?')"
-                                                title="Delete Account"><i class="glyphicon glyphicon-trash"></i>
+                                           th:href="@{/admin/delete/__${user.id}__}"
+                                           onclick="return confirm('Do you want to delete this account?')"
+                                           title="Delete Account"><i class="glyphicon glyphicon-trash"></i>
                                             Delete
                                         </a>
                                     </td>

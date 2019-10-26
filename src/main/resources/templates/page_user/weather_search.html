@@ -149,13 +149,9 @@
         <!-- user dropdown starts -->
         <div class="btn-group pull-right">
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <i class="glyphicon glyphicon-user"
-                   th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><span
-                        class="hidden-sm hidden-xs"
-                >Admin</span></i>
-                <i class="glyphicon glyphicon-user"
-                   th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><span class="hidden-sm hidden-xs"
-                > User</span></i>
+                <i class="glyphicon glyphicon-user">
+                    <span class="hidden-sm hidden-xs" th:utext="${#request.userPrincipal.name}"></span>
+                </i>
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">

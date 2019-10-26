@@ -48,8 +48,8 @@ public class AdminController {
      * @param id
      * @return
      */
-    @GetMapping("/delete/{id}")
-    private String deleteUser(@PathVariable long id) {
+    @PostMapping("/delete")
+    private String deleteUser(@RequestParam long id) {
         userService.delete(id);
         return "redirect:/admin";
     }
@@ -60,7 +60,7 @@ public class AdminController {
      * @param id
      * @return
      */
-    @GetMapping("/edit-status-user")
+    @PostMapping("/edit-status-user")
     private String editStatusUser(@RequestParam long id) {
         userService.editStatusUser(id);
         return "redirect:/admin";
@@ -72,7 +72,7 @@ public class AdminController {
      * @param id
      * @param role
      */
-    @GetMapping("/change-role")
+    @PostMapping("/change-role")
     private void changeRoleUser(@RequestParam long id, @RequestParam String role) {
         userService.editRoleUser(id, role);
     }

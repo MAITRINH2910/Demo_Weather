@@ -23,4 +23,6 @@ public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
     @Query(value = "SELECT * FROM ur_weather.weather WHERE weather.user_id= :userId GROUP BY city_name", nativeQuery = true)
     List<WeatherEntity> findCity(@Param("userId") Long id);
 
+    @Query(value="SELECT * FROM ur_weather.weather ORDER BY DATE DESC", nativeQuery = true)
+    List<WeatherEntity> findAllByUserByDateAsc();
 }

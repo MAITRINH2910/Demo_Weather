@@ -37,7 +37,7 @@ public class AdminController {
         Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
         UserEntity user = userService.findUserByUsername(authUser.getName());
         model.addAttribute("user", user);
-        List<UserEntity> users = userService.findAllUser();
+        List<UserEntity> users = userService.findAllUser(user.getId());
         model.addAttribute("listUsers", users);
         return "page_admin/table";
     }

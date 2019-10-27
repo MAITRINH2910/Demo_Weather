@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ *
+ */
 @Repository
 public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
     List<WeatherEntity> findAllByUser(UserEntity user);
@@ -20,9 +23,9 @@ public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
             @Param("city") String city,
             @Param("userId") Long id);
 
-    @Query(value = "SELECT * FROM ur_weather.weather WHERE weather.user_id= :userId GROUP BY city_name", nativeQuery = true)
+    @Query(value =" SELECT * FROM weather WHERE user_id = 1 and date in (SELECT max(date)" +
+            "FROM weather WHERE user_id =1 GROUP BY city_name)\n" +
+            "ORDER BY date desc", nativeQuery = true)
     List<WeatherEntity> findCity(@Param("userId") Long id);
 
-    @Query(value="SELECT * FROM ur_weather.weather ORDER BY DATE DESC", nativeQuery = true)
-    List<WeatherEntity> findAllByUserByDateAsc();
 }

@@ -13,7 +13,7 @@ public interface UserService {
 
     UserEntity findUserByEmail(String email);
 
-    List<UserEntity> findAllUser();
+    List<UserEntity> findAllUser(Long userId);
 
     void delete(Long id);
 

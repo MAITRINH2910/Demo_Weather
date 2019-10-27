@@ -7,6 +7,7 @@ import com.example.demo.repository.PasswordResetTokenRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ public class PasswordResetController {
     private PasswordResetTokenRepository tokenRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @ModelAttribute("passwordResetForm")
     public PasswordResetDto passwordReset() {

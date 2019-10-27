@@ -194,7 +194,7 @@ public class WeatherController {
             return "redirect:/";
         } else {
             lstByUserByCity
-                    .sort((WeatherEntity w1, WeatherEntity w2) -> w1.getDate().compareTo(w2.getDate()));
+                    .sort((WeatherEntity w2, WeatherEntity w1) -> w2.getDate().compareTo(w1.getDate()));
             Optional<WeatherEntity> entity = lstByUserByCity.stream().findFirst();
             weatherService.deleteWeather(entity.get().getWeatherId());
             insertWeather(cityName, user);
@@ -210,7 +210,6 @@ public class WeatherController {
      */
     public void insertWeather(String cityName, UserEntity userEntity) {
         WeatherEntity result = weatherService.getJsonWeatherSearch(cityName);
-        result.setDate(new Date());
         result.setUser(userEntity);
         weatherService.saveWeather(result);
     }
@@ -234,6 +233,7 @@ public class WeatherController {
         oldWeather.setHumidity(currentWeather.getHumidity());
         oldWeather.setPressure(currentWeather.getPressure());
         oldWeather.setDescription(currentWeather.getDescription());
+        oldWeather.setDate(currentWeather.getDate());
         weatherService.saveWeather(oldWeather);
 
         model.addAttribute("weatherList", weatherList);

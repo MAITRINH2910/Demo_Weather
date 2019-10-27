@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<th:block th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+    <!-- topbar starts -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-inner">
+            <button type="button" class="navbar-toggle pull-left animated flip">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" th:href="@{/}"> <img alt="Charisma Logo" src="/img/logo10.png"/>
+                <span class="hidden-xs"></span></a>
 
-</body>
-</html>
+            <!-- user dropdown starts -->
+            <div class="btn-group pull-right">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user">
+                        <span class="hidden-sm hidden-xs" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif;"
+                              th:utext="${#request.userPrincipal.name}"></span>
+                    </i>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="nav-item"
+                        th:if="${#authorization.expression('hasRole(''ROLE_USER'')') && #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                        <a th:href="@{/admin}">Your Profile</a>
+                    </li>
+                    <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                        <a th:href="@{/admin}">Management</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a th:href="@{/logout}">Log-out</a></li>
+                </ul>
+            </div>        <!-- user dropdown ends -->
+
+            <!-- theme selector starts -->
+            <div class="btn-group pull-right theme-container animated tada">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-tint"></i><span
+                        class="hidden-sm hidden-xs"> Change Theme / Skin</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" id="themes">
+                    <li><a data-value="cerulean" href="#"><i class="whitespace"></i> Cerulean</a></li>
+                    <li><a data-value="simplex" href="#"><i class="whitespace"></i> Simplex</a></li>
+                    <li><a data-value="slate" href="#"><i class="whitespace"></i> Slate</a></li>
+                </ul>
+            </div>
+            <!-- theme selector ends -->
+
+            <ul class="collapse navbar-collapse nav navbar-nav top-menu">
+                <li><a th:href="@{/}"><i class="glyphicon glyphicon-globe"></i> Visit Site</a></li>
+            </ul>
+
+        </div>
+    </div>
+    <!-- topbar ends -->
+</th:block>

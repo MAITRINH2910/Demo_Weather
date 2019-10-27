@@ -19,11 +19,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * This class WeatherController is used to 
+ * This class WeatherController is used to search weather, save weather, delete weather, weather forecast
  */
 @Controller
 public class WeatherController {
@@ -149,7 +150,7 @@ public class WeatherController {
         model.addAttribute("currentWeather", currentWeather);
         WeatherDetailDTO futureWeather = weatherService.getJsonWeatherDetail(cityName);
         List<WeatherEntity> futureWeatherList = new ArrayList<WeatherEntity>();
-        for (int j = 7; j < 40; j = j + days) {
+        for (int j = 0; j < 40; j = j + days) {
             String icon = (host_http + domain_http + "/img/w/" + futureWeather.getList().get(j).getWeather().get(0).getIcon() + tail_icon_path);
             String clouds = futureWeather.getList().get(j).getWeather().get(0).getDescription();
             String humidity = futureWeather.getList().get(j).getMain().getHumidity();
@@ -163,6 +164,9 @@ public class WeatherController {
             WeatherEntity detail = new WeatherEntity(icon, city1, clouds, wind, humidity, pressure, date, temp_min, temp_max);
             futureWeatherList.add(detail);
         }
+        model.addAttribute("cityName", cityName.toUpperCase());
+
+        model.addAttribute("timeToday", Instant.now());
         model.addAttribute("detail", futureWeatherList);
         return "page_user/weather_detail";
     }
@@ -246,8 +250,8 @@ public class WeatherController {
      * @param id
      * @return
      */
-    @GetMapping("/delete-weather/{id}")
-    private String deleteWeather(@PathVariable Long id) {
+    @PostMapping("/delete-weather")
+    private String deleteWeather(@RequestParam long id) {
         weatherService.deleteWeather(id);
         return "redirect:/";
     }

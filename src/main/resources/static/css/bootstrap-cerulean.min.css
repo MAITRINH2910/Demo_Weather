@@ -2472,7 +2472,7 @@ th {
 .table {
     width: 100%;
     max-width: 100%;
-    margin-bottom: 20px
+    margin-bottom: 10px
 }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
@@ -2516,7 +2516,7 @@ th {
 }
 
 .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
-    background-color: #f9f9f9
+    background-color: #f3f3f3
 }
 
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
@@ -6770,4 +6770,12 @@ button.close {
 
 .panel-primary .panel-heading, .panel-success .panel-heading, .panel-warning .panel-heading, .panel-danger .panel-heading, .panel-info .panel-heading, .panel-primary .panel-title, .panel-success .panel-title, .panel-warning .panel-title, .panel-danger .panel-title, .panel-info .panel-title {
     color: #fff
+}
+
+.badge-min{
+    background-color: #23da19 !important;
+}
+
+.badge-max{
+    background-color: #e41717 !important;
 }

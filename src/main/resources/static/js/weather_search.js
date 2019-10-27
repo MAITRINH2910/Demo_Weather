@@ -97,3 +97,41 @@ $(".show-more").click(function () {
     $('[city="' + cityName + '"]:gt(0)').toggle();
     $(this).text() === 'Show less' ? $(this).text('Show more') : $(this).text('Show less');
 });
+
+
+/**
+ * Delete Weather
+ */
+$(".deleteWeather").click(function(){
+    swal({
+
+        title: 'Comfirm!',
+        text: "Are you sure that you want to perform this action?",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#9E9E9E',
+        confirmButtonText: 'Yes, delete it',
+        cancelButtonText: 'No, cancel'
+
+    }).then((result) => {
+
+        if (result.value) {
+        var self = $(this);
+        var id = $(this).closest("tr").attr("data-id");
+
+        $.ajax({
+            url	:"/delete-weather",
+            type	:"POST",
+            data	:{id:id},
+
+            success: function(value){
+                self.closest("tr").remove();
+                location.reload();
+            },
+            error: function() {
+                window.location.href = "/admin?message=error_system";
+            }
+        })
+    }
+})
+})

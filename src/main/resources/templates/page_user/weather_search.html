@@ -277,7 +277,7 @@
                                     </div>
                                     <div class="dateNow"
                                          style="font-size: medium !important; color: #555555 !important; margin-top: 15px">
-                                        <p th:text="*{#calendars.format(date, 'dd-MM-yyyy')}"></p>
+                                        <p th:text="*{#calendars.format(date, 'MMM dd, yyyy')}"></p>
                                     </div>
                                     <div class="descript" style="margin-top: 15px"><span><i
                                             th:text="*{description}"></i></span></div>
@@ -376,7 +376,7 @@
                                     <th:block class="listCities" th:each="ci : ${weatherList0.get(i.index)}"
                                               th:attr="wtest=${ci.getCityName()}">
                                         <th:block th:each="w : ${ci}">
-                                            <tr class="detailDB" th:object="${w}"
+                                            <tr class="detailDB" th:object="${w}" th:data-id="*{weatherId}"
                                                 th:attr="city=${weather1.getCityName()}">
                                                 <td class="icon_rps">
                                                     <img th:src="*{icon}" class="icon">
@@ -387,7 +387,7 @@
                                                         <p class="nameCity"
                                                            th:text="*{cityName}"></p>
                                                     </a></b>
-                                                    <p th:text="*{#calendars.format(date, 'dd-MM-yyyy')}"
+                                                    <p th:text="*{#calendars.format(date, 'MMM dd, yyyy')}"
                                                        style="color: black"></p>
                                                     <!--                                                        </div>-->
                                                 </td>
@@ -401,20 +401,18 @@
                                                        th:text="*{wind}+'m/s &nbsp;  '+ *{humidity}+'% &nbsp; '+*{pressure}+'hpa. '">
                                                         <!--                                                        </div>-->
                                                 </td>
-                                                <td><a class="text-info"
-                                                       th:href="@{/delete-weather/__*{weatherId}__}"
-                                                       onclick="return confirm('Do you want to delete this record?')"
+                                                <td><button class="text-info deleteWeather" style="border: none !important; background: #f3f3f3"
                                                        title="Delete Weather">
                                                     <i class="glyphicon glyphicon-minus-sign"
                                                        style="color: red"></i>
-                                                </a></td>
+                                                </button></td>
                                             </tr>
                                         </th:block>
                                     </th:block>
                                 </table>
                                 <div class="show-more pointer" th:if="${weatherList0.get(i.index).size() > 1}"
                                      th:attr="show=${weather1.getCityName()}"
-                                     style="font-weight:bold; font-size: 15px; text-align: center; background: #c6c6db61;color:#317eac;margin-top: -20px; margin-bottom: 5px ">
+                                     style="font-weight:bold; font-size: 13px; text-align: center; background: #c6c6db61;color:#317eac;margin-top: -10px; margin-bottom: 5px ">
                                     <b>Show more</b>
                                 </div>
                             </div>

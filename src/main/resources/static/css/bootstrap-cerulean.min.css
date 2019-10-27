@@ -245,6 +245,7 @@ td, th {
 
     .navbar {
         display: none
+        background-image: linear-gradient(#426b82, #2fa4e7 60%, #1d9ce5) !important;
     }
 
     .table td, .table th {

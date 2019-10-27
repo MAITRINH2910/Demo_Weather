@@ -1,3 +1,17 @@
+.table td, .table th {
+    padding: 9px !important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.navbar {
+    background-image: linear-gradient(#426b82, #2fa4e7 60%, #1d9ce5) !important;
+}
+
+p {
+    margin-bottom: 0px !important;
+}
+
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;

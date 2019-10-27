@@ -1,51 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<th:block th:replace="layout/head :: head"></th:block>
 
-    <meta charset="utf-8">
-    <title>Page Admin</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Mai Trinh">
-
-    <!-- The styles -->
-    <link id="bs-css" href="css/bootstrap-cerulean.min.css" rel="stylesheet">
-
-    <link href="css/charisma-app.css" rel="stylesheet">
-    <link href='bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
-    <link href='bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
-    <link href='bower_components/chosen/chosen.min.css' rel='stylesheet'>
-    <link href='bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
-    <link href='bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
-    <link href='bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' rel='stylesheet'>
-    <link href='css/jquery.noty.css' rel='stylesheet'>
-    <link href='css/noty_theme_default.css' rel='stylesheet'>
-    <link href='css/elfinder.min.css' rel='stylesheet'>
-    <link href='css/elfinder.theme.css' rel='stylesheet'>
-    <link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
-    <link href='css/uploadify.css' rel='stylesheet'>
-    <link href='css/animate.min.css' rel='stylesheet'>
-
-    <!-- jQuery -->
-    <script src="bower_components/jquery/jquery.min.js"></script>
-
-
-    <!-- The fav icon -->
-    <link rel="shortcut icon" href="https://cdn.pixabay.com/photo/2013/07/12/18/41/weather-153703_640.png">
-    <!--    Sweet Alert-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
-    <script th:src="@{/js/sweetalert2.all.min.js}" type="text/javascript"></script>
-
-    <style>
-        .navbar {
-            background-image: linear-gradient(#426b82, #2fa4e7 60%, #1d9ce5);
-        }
-    </style>
-<body>
 <!-- topbar starts -->
 <div class="navbar navbar-default" role="navigation">
-
     <div class="navbar-inner">
         <button type="button" class="navbar-toggle pull-left animated flip">
             <span class="sr-only">Toggle navigation</span>
@@ -60,7 +18,7 @@
         <div class="btn-group pull-right">
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-user">
-                    <span class="hidden-sm hidden-xs" th:utext="${#request.userPrincipal.name}"></span>
+                    <span class="hidden-sm hidden-xs" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif;" th:utext="${#request.userPrincipal.name}"></span>
                 </i>
                 <span class="caret"></span>
             </button>
@@ -85,15 +43,9 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" id="themes">
-                <li><a data-value="classic" href="#"><i class="whitespace"></i> Classic</a></li>
                 <li><a data-value="cerulean" href="#"><i class="whitespace"></i> Cerulean</a></li>
-                <li><a data-value="cyborg" href="#"><i class="whitespace"></i> Cyborg</a></li>
                 <li><a data-value="simplex" href="#"><i class="whitespace"></i> Simplex</a></li>
-                <li><a data-value="darkly" href="#"><i class="whitespace"></i> Darkly</a></li>
-                <li><a data-value="lumen" href="#"><i class="whitespace"></i> Lumen</a></li>
                 <li><a data-value="slate" href="#"><i class="whitespace"></i> Slate</a></li>
-                <li><a data-value="spacelab" href="#"><i class="whitespace"></i> Spacelab</a></li>
-                <li><a data-value="united" href="#"><i class="whitespace"></i> United</a></li>
             </ul>
         </div>
         <!-- theme selector ends -->
@@ -121,16 +73,6 @@
                         </li>
                         <li><a class="ajax-link" th:href="@{/admin}"><i
                                 class="glyphicon glyphicon-align-justify"></i><span> Tables</span></a></li>
-                        <li><a class="ajax-link" href="chart.html"><i class="glyphicon glyphicon-list-alt"></i><span> Charts</span></a>
-                        </li>
-                        <li><a class="ajax-link" href="gallery.html"><i class="glyphicon glyphicon-picture"></i><span> Gallery</span></a>
-                        </li>
-                        <li class="nav-header hidden-md">Sample Section</li>
-                        <li><a class="ajax-link" href="ui.html"><i class="glyphicon glyphicon-eye-open"></i><span> UI Features</span></a>
-                        </li>
-                        <li><a class="ajax-link" href="typography.html"><i class="glyphicon glyphicon-font"></i><span> Typography</span></a>
-                        </li>
-                        <li><a class="ajax-link" href="calendar.html"><i class="glyphicon glyphicon-calendar"></i><span> Calendar</span></a>
                     </ul>
                 </div>
             </div>
@@ -206,133 +148,8 @@
 
 
 </div><!--/.fluid-container-->
-<script>
-    /**
-     * Change Status User
-     */
-    // $(document).ready(function () {
-    //     $('.checkbox1').change(function () {
-    //         if ($(this).is(":checked")) {
-    //             var returnVal = confirm("Do you want to enable this account?");
-    //             if (returnVal) {
-    //                 var id = $(this).closest("tr").attr("data-id");
-    //                 $.ajax({
-    //                     url: "/admin/edit-status-user",
-    //                     type: "GET",
-    //                     data: {
-    //                         id: id,
-    //
-    //                     },
-    //                 })
-    //             } else {
-    //                 $(this).prop('checked', returnVal);
-    //             }
-    //         } else {
-    //             var returnVal = confirm("Do you want to disable this account?");
-    //             // $(this).attr("checked", returnVal);
-    //             if (returnVal) {
-    //                 var id = $(this).closest("tr").attr("data-id");
-    //                 $.ajax({
-    //                     url: "/admin/edit-status-user",
-    //                     type: "GET",
-    //                     data: {
-    //                         id: id,
-    //                     },
-    //                 })
-    //             } else {
-    //                 $(this).prop('checked', returnVal);
-    //                 location.reload();
-    //             }
-    //         }
-    //     });
-    // })
-
-    /**
-     * Change Role User
-     */
-    $(document).ready(function () {
-        $("select.role").change(function () {
-            var selectedRole = $(this).children("option:selected").val();
-            $("#inputGroupSelect02").val(selectedRole);
-            Swal.fire('Done !', 'You click OK to continue !', 'success')
-            // alert("You has changed ROLE of this account is " + selectedRole);
-            var id = $(this).closest("tr").attr("data-id");
-            console.log(id);
-            $.ajax({
-                url: "/admin/change-role",
-                type: "post",
-                data: {
-                    id: id,
-                    role: selectedRole
-                },
-            })
-                  });
-    });
-
-
-</script>
-
-<script>
-    $('.checkbox1').change(function() {
-        // event tu uncheck -> check
-        if($(this).is(":checked")) {
-
-            swal({
-                title: 'Comfirm!',
-                text: "Are you sure that you want to perform this action?",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#9E9E9E',
-                confirmButtonText: 'Yes, change it',
-                cancelButtonText: 'No, cancel'
-
-            }).then((result) => {
-
-                if (result.value) {
-                var self = $(this);
-                var id   = $(this).closest("tr").attr("data-id");
-
-                $.ajax({
-                    url		:"/admin/edit-status-user",
-                    type	:"POST",
-                    data :{id : id},
-                })
-            }else{
-                $(this).prop('checked',false)
-            }
-        })
-        }else{
-
-            swal({
-                title: 'Comfirm!',
-                text: "Are you sure that you want to perform this action?",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#9E9E9E',
-                confirmButtonText: 'Yes, change it',
-                cancelButtonText: 'No, cancel'
-
-            }).then((result) => {
-
-                if (result.value) {
-                var self = $(this);
-                var id = $(this).closest("tr").attr("data-id");
-                $.ajax({
-                    url		: "/admin/edit-status-user",
-                    type	: "POST",
-                    data:{id:id}
-                })
-            }else{
-                $(this).prop('checked',true)
-            }
-        })
-        }
-    });
-</script>
-<!-- external javascript -->
 
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
 <!-- library for cookie management -->
 <script src="js/jquery.cookie.js"></script>
 <!-- calender plugin -->
@@ -363,41 +180,8 @@
 <script src="js/jquery.history.js"></script>
 <!-- application script for Charisma demo -->
 <script src="js/charisma.js"></script>
+<script src="/js/table.js"></script>
+<!--<th:block th:replace="layout/footer :: footer"></th:block>-->
 
 </body>
 </html>
-
-<script>
-    $(".deleteAccount").click(function(){
-        swal({
-
-            title: 'Comfirm!',
-            text: "Are you sure that you want to perform this action?",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#9E9E9E',
-            confirmButtonText: 'Yes, delete it',
-            cancelButtonText: 'No, cancel'
-
-        }).then((result) => {
-
-            if (result.value) {
-            var self = $(this);
-            var id = $(this).closest("tr").attr("data-id");
-
-            $.ajax({
-                url	:"/admin/delete",
-                type	:"POST",
-                data	:{id:id},
-
-                success: function(value){
-                    self.closest("tr").remove();
-                },
-                error: function() {
-                    window.location.href = "/admin?message=error_system";
-                }
-            })
-        }
-    })
-    })
-</script>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" id="location" xmlns:th="http://www.w3.org/1999/xhtml">
+<th:block th:replace="layout/head :: head"></th:block>
 
 <head>
     <meta charset="utf-8">
@@ -15,21 +16,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link href='css/weather.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href='/css/weather_detail.css'>
-    <style>
-        .navbar {
-            background-image: linear-gradient(#426b82, #2fa4e7 60%, #1d9ce5);
-        }
-
-        .table td, .table th {
-            padding: 9px !important;
-            vertical-align: top;
-            border-top: 1px solid #dee2e6;
-        }
-
-        p {
-            margin-bottom: 0px !important;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">

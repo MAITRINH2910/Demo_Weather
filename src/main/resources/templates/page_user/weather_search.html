@@ -1,135 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-
-    <meta charset="utf-8">
-    <title>Ur-Weather</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Mai Trinh">
-
-    <!-- The styles -->
-    <link id="bs-css" href="css/bootstrap-cerulean.min.css" rel="stylesheet">
-
-    <link href="css/charisma-app.css" rel="stylesheet">
-    <link href='bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
-    <link href='bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
-    <link href='bower_components/chosen/chosen.min.css' rel='stylesheet'>
-    <link href='bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
-    <link href='bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
-    <link href='bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' rel='stylesheet'>
-    <link href='css/jquery.noty.css' rel='stylesheet'>
-    <link href='css/noty_theme_default.css' rel='stylesheet'>
-    <link href='css/elfinder.min.css' rel='stylesheet'>
-    <link href='css/elfinder.theme.css' rel='stylesheet'>
-    <link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
-    <link href='css/uploadify.css' rel='stylesheet'>
-    <link href='css/animate.min.css' rel='stylesheet'>
-    <link href='css/weather-search.css' rel='stylesheet'>
-
-    <!-- jQuery -->
-    <script src="bower_components/jquery/jquery.min.js"></script>
-
-    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- The fav icon -->
-    <link rel="shortcut icon" href="https://cdn.pixabay.com/photo/2013/07/12/18/41/weather-153703_640.png">
-
-    <style>
-        .vk_gy vk_sh wob-dtl {
-            margin-left: 310px;
-        }
-    </style>
-
-
-    <script type="application/x-javascript"> addEventListener("load", function () {
-        setTimeout(hideURLbar, 0);
-    }, false);
-
-    function hideURLbar() {
-        window.scrollTo(0, 1);
-    } </script>
-    <!-- Custom Theme files -->
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="css/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
-    <!-- //Custom Theme files -->
-    <!-- web font -->
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <!--web font-->
-    <link href='//fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-    <!-- //web font -->
-    <!-- js -->
-    <script src="js/jquery-1.9.1.min.js"></script>
-    <script src="js/owl.carousel.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#owl-demo").owlCarousel({
-
-                autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-                items: 6,
-                itemsDesktop: [640, 5],
-                itemsDesktopSmall: [414, 4]
-
-            });
-
-        });
-    </script>
-    <!-- //js -->
-    <script>
-        $(document).ready(function () {
-
-            var x = document.getElementById("demo");
-            if (navigator.geolocation) {
-
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-
-            function showPosition(position) {
-
-                var lat = position.coords.latitude;
-                var lon = position.coords.longitude;
-
-                $.ajax({
-                    url: "/local-weather",
-                    type: "GET",
-                    data: {
-                        lat: lat,
-                        lon: lon
-                    },
-                    success: function (value) {
-                        var temp = value.main.temp;
-                        var icon = '<span><img class="weather-widget__img" src="https://openweathermap.org/img/wn/'
-                            + value.weather[0].icon + '.png"  width="75" height="75"></span>';
-                        var city = '<span>' + value.name + '</span>';
-                        var descript_local = '<span>' + value.weather[0].description + '</span>';
-                        var tempMin = '<span>' + value.main.temp_min + ' &degC' + '</span>';
-                        var tempMax = '<span>' + value.main.temp_max + '&degC' + '</span>';
-                        var pressure = '<span>' + value.main.pressure + 'hpa.' + '</span>';
-                        var humidity = '<span>' + value.main.humidity + '%' + '</span>';
-                        var wind = '<span>' + value.wind.speed + 'm/s' + '</span>';
-
-                        $('#city').append(city);
-                        $('#icon_test').append(icon);
-                        $('#temparature').append(temp);
-                        $('#descript_local').append(descript_local);
-                        $('#tempMin_local').append(tempMin);
-                        $('#tempMax_local').append(tempMax);
-                        $('#pressure_local').append(pressure);
-                        $('#humidity_local').append(humidity);
-                        $('#wind_local').append(wind);
-
-                    }
-                })
-            }
-        });
-    </script>
-</head>
-
+<th:block th:replace="layout/head :: head"></th:block>
 <body onload="startTime()">
 <!-- topbar starts -->
 <div class="navbar navbar-default" role="navigation">
@@ -150,7 +21,8 @@
         <div class="btn-group pull-right">
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-user">
-                    <span class="hidden-sm hidden-xs" th:utext="${#request.userPrincipal.name}"></span>
+                    <span class="hidden-sm hidden-xs" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif;"
+                          th:if="${#request.userPrincipal.name!=null}" th:utext="${#request.userPrincipal.name}"></span>
                 </i>
                 <span class="caret"></span>
             </button>
@@ -175,15 +47,9 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu hidden-xs" id="themes">
-                <li><a data-value="classic" href="#"><i class="whitespace"></i> Classic</a></li>
                 <li><a data-value="cerulean" href="#"><i class="whitespace"></i> Cerulean</a></li>
-                <li><a data-value="cyborg" href="#"><i class="whitespace"></i> Cyborg</a></li>
                 <li><a data-value="simplex" href="#"><i class="whitespace"></i> Simplex</a></li>
-                <li><a data-value="darkly" href="#"><i class="whitespace"></i> Darkly</a></li>
-                <li><a data-value="lumen" href="#"><i class="whitespace"></i> Lumen</a></li>
                 <li><a data-value="slate" href="#"><i class="whitespace"></i> Slate</a></li>
-                <li><a data-value="spacelab" href="#"><i class="whitespace"></i> Spacelab</a></li>
-                <li><a data-value="united" href="#"><i class="whitespace"></i> United</a></li>
             </ul>
         </div>
         <!-- theme selector ends -->
@@ -471,7 +337,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="vk_gy vk_sh wob-dtl" style="font-weight: bold;">
+                                        <div class="vk_gy vk_sh wob-dtl" style="font-weight: bold; margin-left:310px ">
                                             <div>Pressure: <span id="wob_pp" th:text="*{pressure}+' hpa'"></span>
                                             </div>
                                             <div>Humidity: <span id="wob_hm" th:text="*{humidity}+' %'"></span>
@@ -559,28 +425,12 @@
         <!-- right page ends-->
     </div><!--/fluid-row-->
 </div><!--/.fluid-container-->
-<script>
-    if ($('.cityList').length > 1) {
-        $('tr[city]:visible').each(function () {
-            var city = $(this).attr('city');
-            $(this).nextAll('tr[city="' + city + '"]').hide();
-        });
-    }
-    $(".show-more").click(function () {
-        var cityName = $(this).attr("show");
-        console.log(cityName);
-        $('[city="' + cityName + '"]:gt(0)').toggle();
-        $(this).text() === 'Show less' ? $(this).text('Show more') : $(this).text('Show less');
-    });
-</script>
-<style>
-    .navbar{
-        background-image: linear-gradient(#426b82, #2fa4e7 60%, #1d9ce5);
-    }
-</style>
-<!-- external javascript -->
 
+<script src="/js/jquery-1.9.1.min.js"></script>
+<script src="/js/owl.carousel.js"></script>
+<script src="/js/weather_search.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--<th:block th:replace="layout/footer :: footer"></th:block>-->
 
 <!-- library for cookie management -->
 <script src="js/jquery.cookie.js"></script>
@@ -589,13 +439,12 @@
 <script src='bower_components/fullcalendar/dist/fullcalendar.min.js'></script>
 <!-- data table plugin -->
 <script src='js/jquery.dataTables.min.js'></script>
-
 <!-- select or dropdown enhancer -->
 <script src="bower_components/chosen/chosen.jquery.min.js"></script>
 <!-- plugin for gallery image view -->
 <script src="bower_components/colorbox/jquery.colorbox-min.js"></script>
 <!-- notification plugin -->
-<script src="js/jquery.noty.js"></script>
+<!--<script src="js/jquery.noty.js"></script>-->
 <!-- library for making tables responsive -->
 <script src="bower_components/responsive-tables/responsive-tables.js"></script>
 <!-- tour plugin -->
@@ -612,29 +461,6 @@
 <script src="js/jquery.history.js"></script>
 <!-- application script for Charisma demo -->
 <script src="js/charisma.js"></script>
-<!-- Time-JavaScript -->
-<script>
-    function startTime() {
-        var today = new Date();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        m = checkTime(m);
-        s = checkTime(s);
-        document.getElementById('txt').innerHTML =
-            h + ":" + m + ":" + s;
-        var t = setTimeout(startTime, 500);
-    }
-
-    function checkTime(i) {
-        if (i < 10) {
-            i = "0" + i
-        }
-        ; // add zero in front of numbers < 10
-        return i;
-    }
-</script>
-<!-- //Time-JavaScript -->
 
 </body>
 </html>

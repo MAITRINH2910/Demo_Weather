@@ -47,13 +47,15 @@
                             <!--Body-->
                             <form autocomplete="off" th:action="@{/performLogin}" name='f' onclick="return validate()"
                                   method="POST" class="form-horizontal" role="form">
-                                <div th:if="${param.logout}">
-                                    <div class="alert alert-info">You have been logged out.</div>
-                                </div>
-                                <div th:if="${param.success}">
-                                    <div class="alert alert-info"><span class="glyphicon glyphicon-ok-sign"></span>
-                                        <b style="font-size: 15px">Registered Successfully.</b></div>
-                                </div>
+                                <!--                                <div th:if="${param.logout}">-->
+                                <!--                                    <div class="alert alert-info">You have been logged out.</div>-->
+                                <!--                                </div>-->
+                                <!--                                <div th:if="${param.success}">-->
+                                <!--                                    <div class="alert alert-info"><span class="glyphicon glyphicon-ok-sign"></span>-->
+                                <!--                                        <b style="font-size: 15px">Registered Successfully.</b></div>-->
+                                <!--                                </div>-->
+                                <div th:if="${message!=null}" class="alert alert-info"
+                                     style="font-weight: bold; margin: 30px 0px;" th:text="${message}"></div>
                                 <div class="md-form">
                                     <i class="fas fa-user prefix white-text active"></i>
                                     <label for="form3" class="active">Username</label>
@@ -75,9 +77,9 @@
                                 </div>
                                 <div class="error" id="bothErr"></div>
 
-                                <div th:if="${param.error}">
-                                    <div class="alert alert-danger">Invalid username or password!</div>
-                                </div>
+                                <!--                                <div th:if="${param.error}">-->
+                                <!--                                    <div class="alert alert-danger">Invalid username or password!</div>-->
+                                <!--                                </div>-->
 
                                 <div class="text-center mt-4">
                                     <button class="btn btn-indigo" type="submit">Sign in</button>

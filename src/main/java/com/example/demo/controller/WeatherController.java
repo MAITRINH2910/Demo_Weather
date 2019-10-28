@@ -114,31 +114,7 @@ public class WeatherController {
             model.addAttribute("status", "add");
         }
     }
-//    @GetMapping("/search-city")
-//    private String findWeatherByCity(@RequestParam String cityName, Model model) {
-//        // Return Weather Data or Not Found
-//        try {
-//            WeatherEntity currentWeather = weatherService.getJsonWeatherSearch(cityName);
-//            model.addAttribute("currentWeather", currentWeather);
-//            // Show History Weathers
-//            UserEntity user = userService.getUserWithIcon();
-//            List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
-//            model.addAttribute("listCities", listCity);
-//            List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
-//            model.addAttribute("weatherList0", weatherGroupByCity);
-//        } catch (Exception e) {
-//            model.addAttribute("message", "City is not found!!!");
-//        }
-//
-//        // Handle Button ADD --> UPDATE by Comparing Current Date and Latest Date of Current Weather
-//        WeatherEntity oldWeather = weatherService.filterWeatherByCity(cityName);
-//        if (oldWeather != null) {
-//            model.addAttribute("status", "update");
-//        } else {
-//            model.addAttribute("status", "add");
-//        }
-//        return "page_user/weather_search";
-//    }
+
      /**
      * Get list detail weather entity forecast
      * @param cityName

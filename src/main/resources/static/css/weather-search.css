@@ -112,10 +112,11 @@
 
     #descript_local {
         margin-top: 30px;
-        margin-right: 10px;
+        margin-left: -25px;
         color: white;
         width: 117px
     }
+
 
     .icon_descript {
         width: 90px;
@@ -393,7 +394,7 @@
 @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
     .navbar {
         position: relative;
-        min-height: 50px;
+        height: 65px;
         border: 1px solid transparent;
         margin-bottom: 0px !important;
     }
@@ -405,6 +406,24 @@
         border-style: solid;
         border-radius: 5px;
         border-color: #d7cece;
+    }
+
+    .main-wthree-row {
+        width: 100% !important;
+        margin: 0em auto 1em !important;
+    }
+
+    .icon_descript {
+        text-align: right;
+    }
+
+    #descript_local {
+        margin-top: -5px;
+    }
+
+    div#txt {
+        font-size: 1.3em;
+        margin-top: -120px;
     }
 
     .ch-container {
@@ -507,10 +526,60 @@
 
 /* Galaxy ----------- */
 @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
-    .search_form {
-        margin-top: 8px;
-        margin-left: -5px;
-        width: 215px;
+    navbar {
+        position: relative;
+        margin-bottom: 0px !important;
+        border: 1px solid transparent;
+        height: 70px !important;
+        min-height: 0px !important;
+    }
+
+    search_form {
+        margin-bottom: -123px;
+        margin-left: 36px;
+        width: 150px;
+    }
+
+    .form-control {
+        width: 55%;
+        margin-top: 10px;
+    }
+
+    .btn-group > .btn:first-child {
+        margin-left: 0;
+        margin-top: -80px;
+    }
+
+    .btn-secondary {
+        margin-right: 60px !important;
+        margin-top: -80px !important;
+    }
+
+    .owl-carousel {
+        margin-top: 85px;
+    }
+
+    .icon_descript {
+        text-align: right;
+    }
+
+    #temparature {
+        text-align: center;
+        margin-top: -90px;
+    }
+
+    .agileinfo-top-time {
+        padding: -0.5em 0 0;
+        font-size: 13px;
+    }
+
+    h2 {
+        display: none;
+    }
+
+    vk_bk wob-unit {
+        text-align: center !important;
+        margin-top: -35px !important;
     }
 
     .icon_rps {
@@ -898,7 +967,15 @@
 }
 
 /* Samsung Galaxy S5 ----------- */
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3) {
+@media only screen and (min-device-width: 375px) and (max-device-height: 559px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+    div.table-wrapper {
+        position: relative;
+        margin-bottom: 20px;
+        overflow: hidden;
+        border-right: 1px solid #ccc;
+        margin-top: 5px;
+    }
+
     /* Styles */
 }
 

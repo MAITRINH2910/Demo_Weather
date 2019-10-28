@@ -29,7 +29,21 @@ public class AuthController {
      * @return
      */
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "logout", required = false) String logout,
+                            @RequestParam(value = "success", required = false) String success,
+                            Model model) {
+        String message = null;
+        if(error != null) {
+            message = "Username or Password is incorrect !!";
+        }
+        if(logout != null) {
+            message = "You have been successfully logged out !!";
+        }
+        if(success !=null){
+            message = "Registered Successfully !!";
+        }
+        model.addAttribute("message", message);
         return "page_auth/login";
     }
 
@@ -61,9 +75,9 @@ public class AuthController {
                 return "redirect:/401";
             else
                 // Return page login and message login failed
-                return "redirect:login?error=true";
+                return "redirect:login?error";
         }
-        return "redirect:login?error=true";
+        return "redirect:login?error";
     }
 
     /**

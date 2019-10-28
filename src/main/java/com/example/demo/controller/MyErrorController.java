@@ -43,38 +43,27 @@ public class MyErrorController implements ErrorController {
      *
      * @return
      */
-    @GetMapping("/403")
-    public ModelAndView accesssDenied() {
-        Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity user = userService.findUserByUsername(authUser.getName());
-        ModelAndView model = new ModelAndView();
-
-        if (user != null) {
-            model.addObject("msg", "Hi " + user.getFirstName()
-                    + ", you do not have permission to access this page!");
-        } else {
-            model.addObject("msg",
-                    "You do not have permission to access this page!");
-        }
-        model.setViewName("page_error/403");
-        return model;
-    }
 
     @GetMapping("/error")
     private ModelAndView handleError(HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView();
-
-        if(response.getStatus() == HttpStatus.NOT_FOUND.value()) {
+        if (response.getStatus() == HttpStatus.NOT_FOUND.value()) {
             modelAndView.setViewName("page_error/404");
-        }
-        else if(response.getStatus() == HttpStatus.FORBIDDEN.value()) {
+        } else if (response.getStatus() == HttpStatus.FORBIDDEN.value()) {
+            Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
+            UserEntity user = userService.findUserByUsername(authUser.getName());
+            if (user != null) {
+                modelAndView.addObject("msg", "Hi " + user.getFirstName()
+                        + ", you do not have permission to access this page!");
+            } else {
+                modelAndView.addObject("msg",
+                        "You do not have permission to access this page!");
+            }
             modelAndView.setViewName("page_error/403");
-        }
-        else if(response.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+        } else if (response.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
             modelAndView.setViewName("page_error/500");
-        }
-        else {
-            modelAndView.setViewName("error");
+        } else {
+            modelAndView.setViewName("page_error/404");
         }
 
         return modelAndView;

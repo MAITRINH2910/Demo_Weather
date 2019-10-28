@@ -65,9 +65,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .and()
                 // When user login with Role_User but they want to access
-                // page for Role_Admin => redirec to page /403
+                // page for Role_Admin => redirect to page error
                 .exceptionHandling()
-                .accessDeniedPage("/403");
+                .accessDeniedPage("/error");
     }
 
 }

@@ -45,7 +45,7 @@
                                     Login</h3>
                             </div>
                             <!--Body-->
-                            <form autocomplete="off" th:action="@{/login}" name='f' onsubmit="return validate()"
+                            <form autocomplete="off" th:action="@{/performLogin}" name='f' onclick="return validate()"
                                   method="POST" class="form-horizontal" role="form">
                                 <div th:if="${param.logout}">
                                     <div class="alert alert-info">You have been logged out.</div>

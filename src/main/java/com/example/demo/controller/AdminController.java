@@ -34,10 +34,9 @@ public class AdminController {
      */
     @GetMapping
     private String listUsers(Model model) {
-        Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity user = userService.findUserByUsername(authUser.getName());
+        UserEntity user = userService.getUser();
         model.addAttribute("user", user);
-        List<UserEntity> users = userService.findAllUser(user.getId());
+        List<UserEntity> users = userService.findAllExceptAdmin(user.getId());
         model.addAttribute("listUsers", users);
         return "page_admin/table";
     }

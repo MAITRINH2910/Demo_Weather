@@ -30,22 +30,15 @@ public class HomeController {
 
     @Autowired
     public WeatherService weatherService;
-
-    /**
-     * History Weather
-     * @param model
-     * @return
-     */
-    @GetMapping
-    public String homePage(Model model) {
-        UserEntity user = userService.getAuthUser();
-        List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
-        model.addAttribute("listCities", listCity);
-        List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
-        model.addAttribute("weatherList0", weatherGroupByCity);
-        return "page_user/weather_search";
-    }
-
+//    @GetMapping
+//    public String homePage(Model model) {
+//        UserEntity user = userService.getUserWithIcon();
+//        List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
+//        model.addAttribute("listCities", listCity);
+//        List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
+//        model.addAttribute("weatherList0", weatherGroupByCity);
+//        return "page_user/weather_search";
+//    }
     /**
      * Show Local Weather
      * @param lat

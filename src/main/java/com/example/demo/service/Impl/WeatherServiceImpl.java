@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,8 @@ public class WeatherServiceImpl implements WeatherService {
     private String weatherCurrent;
     @Value("${weather.url.forecast}")
     private String weatherForecast;
+    @Value("${tail.icon.path}")
+    private String tail_icon_path;
 
     @Autowired
     UserRepository userRepository;
@@ -231,4 +234,28 @@ public class WeatherServiceImpl implements WeatherService {
 
         return curWeather;
     }
+
+    /**
+     * Get List Weather Forecast
+     * @param listDetail
+     * @return
+     * @throws ParseException
+     */
+    @Override
+    public List<WeatherEntity> getListDetailsDTO(List<com.example.demo.DTO.transfer.WeatherPropertyDTO.List> listDetail) throws ParseException {
+        int SIZE_WEATHER_REPEAT = 8;
+        List<WeatherEntity> futureWeatherList = new ArrayList<WeatherEntity>();
+        for (int i = 0; i < 40; i += SIZE_WEATHER_REPEAT) {
+            futureWeatherList.add(new WeatherEntity((host_http + domain + "/img/w/" + listDetail.get(i).getWeather().get(0).getIcon() + tail_icon_path),
+                    listDetail.get(i).getWeather().get(0).getDescription(),
+                    listDetail.get(i).getWind().getSpeed(),
+                    listDetail.get(i).getMain().getHumidity(),
+                    listDetail.get(i).getMain().getPressure(),
+                    CommonUtil.stringToDate(listDetail.get(i).getDt_txt()),
+                    listDetail.get(i).getMain().getTemp_min(),
+                    listDetail.get(i).getMain().getTemp_min()));
+        }
+        return futureWeatherList;
+    }
+
 }

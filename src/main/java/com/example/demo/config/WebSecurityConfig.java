@@ -21,12 +21,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private UserAuthFailureHandler failureHandler;
-
-    @Autowired
-    private UserAuthSuccessHandler successHandler;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -34,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        // Set find User trong Database.
+        // Set for PasswordEncoder
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -56,16 +52,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**")
                 .hasRole("ADMIN")
                 .and()
+                // Configure for Login Form
                 .formLogin()
                 .loginPage("/login")
+                .loginProcessingUrl("/performLogin")
+                .successForwardUrl("/postLogin")
+                .failureForwardUrl("/performFailUrl")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successHandler(successHandler)
-                .failureHandler(failureHandler)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .and()
+                // When user login with Role_User but they want to access
+                // page for Role_Admin => redirec to page /403
                 .exceptionHandling()
                 .accessDeniedPage("/403");
     }

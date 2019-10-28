@@ -13,7 +13,7 @@ public interface UserService {
 
     UserEntity findUserByEmail(String email);
 
-    List<UserEntity> findAllUser(Long userId);
+    List<UserEntity> findAllExceptAdmin(long userId);
 
     void delete(Long id);
 
@@ -25,7 +25,7 @@ public interface UserService {
 
     void updatePassword(String password, Long userId);
 
-    UserEntity getAuthUser();
+    UserEntity getUserWithIcon();
 
     UserEntity getUser();
 

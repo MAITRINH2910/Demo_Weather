@@ -11,7 +11,6 @@ $(document).ready(function () {
 
 });
 
-
 //Local Weather
 $(document).ready(function () {
 

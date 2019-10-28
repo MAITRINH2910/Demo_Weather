@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     List<UserEntity> findAll();
 
     @Query(value = "SELECT * FROM ur_weather.users WHERE users.id != :userId", nativeQuery = true)
-    List<UserEntity> findAllUser( @Param("userId") Long id);
+    List<UserEntity> findAllExceptAdmin( @Param("userId") Long id);
 
     Optional<UserEntity> findById(Long id);
 

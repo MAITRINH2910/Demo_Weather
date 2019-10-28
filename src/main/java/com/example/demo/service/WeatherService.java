@@ -6,6 +6,7 @@ import com.example.demo.entity.UserEntity;
 import com.example.demo.entity.WeatherEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -36,4 +37,6 @@ public interface WeatherService {
     List<List<WeatherEntity>> getListWeatherGroupByCity(UserEntity user);
 
     WeatherEntity filterWeatherByCity(String cityName);
+
+    List<WeatherEntity> getListDetailsDTO(List<com.example.demo.DTO.transfer.WeatherPropertyDTO.List> listDetail) throws ParseException;
 }

@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntity> findAllUser(Long userId) {
-        return userRepository.findAllUser(userId);
+    public List<UserEntity> findAllExceptAdmin(long userId) {
+        return userRepository.findAllExceptAdmin(userId);
     }
 
 
@@ -82,16 +82,6 @@ public class UserServiceImpl implements UserService {
         user.setActive(true);
         return userRepository.save(user);
     }
-    //    @Override
-//    public User saveUser(User admin) {
-//        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-//        admin.setActive(true);
-//        HashSet<Roles> roles = new HashSet<>();
-//        roles.add(roleRepository.findByRoleName("ROLE_ADMIN"));
-////        roles.add(roleRepository.findByRoleName("ROLE_USER"));
-//        admin.setRoleName(roles);
-//        return userRepository.save(admin);
-//    }
 
     @Override
     public void editStatusUser(Long id) {
@@ -135,14 +125,12 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public UserEntity getAuthUser() {
-        Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity user = userRepository.findByUsername(authUser.getName());
-        List<WeatherEntity> weatherList = weatherRepository.findAllByUser(user);
+    public UserEntity getUserWithIcon() {
+        List<WeatherEntity> weatherList = weatherRepository.findAllByUser(getUser());
         for (int i = 0; i < weatherList.size(); i++) {
             weatherList.get(i).setIcon(host_http + domain_http + "/img/w/" + weatherList.get(i).getIcon() + tail_icon_path);
         }
-        return user;
+        return getUser();
     }
 
     /**

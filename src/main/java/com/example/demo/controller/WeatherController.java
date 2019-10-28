@@ -1,23 +1,20 @@
 package com.example.demo.controller;
 
-import com.example.demo.DTO.display.ForecastWeatherDetailDTO;
 import com.example.demo.DTO.transfer.WeatherDetailDTO;
-import com.example.demo.DTO.transfer.WeatherPropertyDTO.ListDetail;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.entity.WeatherEntity;
 import com.example.demo.mapper.WeatherDTOConverterToWeatherEntity;
 import com.example.demo.service.UserService;
 import com.example.demo.service.WeatherService;
-import com.example.demo.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.time.Instant;
 import java.util.*;
@@ -58,84 +55,101 @@ public class WeatherController {
     @Value("${weather.url.forecast}")
     private String weatherForecast;
 
+
+    @GetMapping("/")
+    public String homeDefault(Model model, Principal principal) {
+
+        return processHome(model, principal);
+    }
     /**
-     * SEARCH WEATHER
+     * Search current Weather City
      *
      * @param cityName
-     * @param model
-     * @param modelMap
-     * @return
+     * @param principal
+     * @return view Home
      */
     @GetMapping("/search-city")
-    private String findWeatherByCity(@RequestParam String cityName, Model model, ModelMap modelMap) {
-        // Return Weather Data or Not Found
-        try {
-            WeatherEntity currentWeather = weatherService.getJsonWeatherSearch(cityName);
-            model.addAttribute("currentWeather", currentWeather);
-            // Show History Weathers
-            UserEntity user = userService.getAuthUser();
-            List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
-            model.addAttribute("listCities", listCity);
-            List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
-            model.addAttribute("weatherList0", weatherGroupByCity);
-        } catch (Exception e) {
-            model.addAttribute("message", "City is not found!!!");
-        }
+    public String searchWeather(@RequestParam String cityName, Model model, Principal principal) {
+        // Get result search : weather entity
+        getWeatherSearch(cityName, principal, model);
+        // Forward about page home
+        return processHome(model, principal);
+    }
 
-        // Handle Button ADD --> UPDATE by Comparing Current Date and Latest Date of Current Weather
-        WeatherEntity oldWeather = weatherService.filterWeatherByCity(cityName);
-        if (oldWeather != null) {
-            modelMap.addAttribute("status", "update");
-        } else {
-            modelMap.addAttribute("status", "add");
-        }
+    /**
+     * Process Data when tranfer to View
+     * @param model
+     * @param principal
+     * @return url page Home and Data weather by User
+     */
+    public String processHome(Model model, Principal principal) {
+        UserEntity user = userService.getUserWithIcon();
+        List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
+        model.addAttribute("listCities", listCity);
+        List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
+        model.addAttribute("weatherList0", weatherGroupByCity);
+
         return "page_user/weather_search";
     }
 
-    private List<ForecastWeatherDetailDTO> getListDetailsDTO(List<ListDetail> listDetail){
-        int SIZE_WEATHER_REPEAT = 8;
-        List<ForecastWeatherDetailDTO> lstForecast = new ArrayList<ForecastWeatherDetailDTO>();
-        for (int i = 0; i < listDetail.size(); i += SIZE_WEATHER_REPEAT) {
-            lstForecast.add(new ForecastWeatherDetailDTO(i, listDetail.get(i).getDt_txt(),
-                    listDetail.get(i).getWeather().get(0).getIcon(),
-                    listDetail.get(i).getMain().getTempMin(),
-                    listDetail.get(i).getMain().getTempMax(),
-                    listDetail.get(i).getWeather().get(0).getDescription(),
-                    listDetail.get(i).getWind().getSpeed(),
-                    listDetail.get(i).getMain().getHumidity(),
-                    listDetail.get(i).getMain().getPressure(),
-                    listDetail.get(i).getClouds().getAll()));
+    /**
+     * get result search
+     * @param cityName
+     * @param principal
+     */
+    private void getWeatherSearch(String cityName, Principal principal, Model model) {
+        try {
+            // Get weather by rest template
+            WeatherEntity weatherSearch = weatherService.getJsonWeatherSearch(cityName);
+            // Get list weather by user by name city
+            model.addAttribute("currentWeather", weatherSearch);
+        } catch (Exception e) {
+            // Name City search is not found
+            model.addAttribute("msgSearch", "City is not found !");
         }
-        return lstForecast;
+        WeatherEntity oldWeather = weatherService.filterWeatherByCity(cityName);
+        if (oldWeather != null) {
+            model.addAttribute("status", "update");
+        } else {
+            model.addAttribute("status", "add");
+        }
     }
-//    /**
-//     * Get list detail weather entity forecast
-//     * @param cityName
-//     * @return list detailweatherEntity forecast
-//     */
-//    private List<ForecastWeatherDetailDTO> getListDetails5Day(String cityName){
-//        // Get list forecast weather from API
-//        WeatherDetailDTO detailsWeatherDTO = weatherService.getJsonWeatherDetail(cityName);
-//        return getListDetailsDTO(detailsWeatherDTO.getListWeather());
-//    }
-//
-//
-//    @GetMapping("/weather-detail/{cityName}")
-//    public String foreCast5Day(@PathVariable String cityName, Model model) {
-//        WeatherEntity currentWeather = weatherService.getJsonWeatherSearch(cityName);
-//        model.addAttribute("currentWeather", currentWeather);
+//    @GetMapping("/search-city")
+//    private String findWeatherByCity(@RequestParam String cityName, Model model) {
+//        // Return Weather Data or Not Found
 //        try {
-//            // Get list forecast weather 5 day of city
-//            List<ForecastWeatherDetailDTO> lstForecast = getListDetails5Day(cityName);
-//            if(lstForecast != null) {
-//                model.addAttribute("detail", lstForecast);
-//                return "page_user/weather_detail";
-//            }
+//            WeatherEntity currentWeather = weatherService.getJsonWeatherSearch(cityName);
+//            model.addAttribute("currentWeather", currentWeather);
+//            // Show History Weathers
+//            UserEntity user = userService.getUserWithIcon();
+//            List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
+//            model.addAttribute("listCities", listCity);
+//            List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
+//            model.addAttribute("weatherList0", weatherGroupByCity);
 //        } catch (Exception e) {
-//            return "redirect:home-weather?message_forecast=notfound";
+//            model.addAttribute("message", "City is not found!!!");
 //        }
-//        return "";
+//
+//        // Handle Button ADD --> UPDATE by Comparing Current Date and Latest Date of Current Weather
+//        WeatherEntity oldWeather = weatherService.filterWeatherByCity(cityName);
+//        if (oldWeather != null) {
+//            model.addAttribute("status", "update");
+//        } else {
+//            model.addAttribute("status", "add");
+//        }
+//        return "page_user/weather_search";
 //    }
+     /**
+     * Get list detail weather entity forecast
+     * @param cityName
+     * @return list detailweatherEntity forecast
+     */
+    private List<WeatherEntity> getListForeCast(String cityName) throws ParseException {
+        // Get list forecast weather from API
+        WeatherDetailDTO detailsWeatherDTO = weatherService.getJsonWeatherDetail(cityName);
+        return weatherService.getListDetailsDTO(detailsWeatherDTO.getList());
+    }
+
     /**
      * WEATHER DETAIL
      * 40 records for 5 continuous days => days = 40/5
@@ -145,31 +159,22 @@ public class WeatherController {
      * @return
      */
     @GetMapping("/weather-detail/{cityName}")
-    private String getWeatherDetail(@PathVariable String cityName, Model model) throws ParseException {
-        WeatherEntity currentWeather = weatherService.getJsonWeatherSearch(cityName);
-        model.addAttribute("currentWeather", currentWeather);
-        WeatherDetailDTO futureWeather = weatherService.getJsonWeatherDetail(cityName);
-        List<WeatherEntity> futureWeatherList = new ArrayList<WeatherEntity>();
-        for (int j = 0; j < 40; j = j + days) {
-            String icon = (host_http + domain_http + "/img/w/" + futureWeather.getList().get(j).getWeather().get(0).getIcon() + tail_icon_path);
-            String clouds = futureWeather.getList().get(j).getWeather().get(0).getDescription();
-            String humidity = futureWeather.getList().get(j).getMain().getHumidity();
-            String pressure = futureWeather.getList().get(j).getMain().getPressure();
-            String wind = futureWeather.getList().get(j).getWind().getSpeed();
-            Double temp = futureWeather.getList().get(j).getMain().getTemp();
-            Double temp_min = futureWeather.getList().get(j).getMain().getTemp_min();
-            Double temp_max = futureWeather.getList().get(j).getMain().getTemp_max();
-            String city1 = futureWeather.getCity().getName();
-            Date date = CommonUtil.stringToDate(futureWeather.getList().get(j).getDt_txt());
-            WeatherEntity detail = new WeatherEntity(icon, city1, clouds, wind, humidity, pressure, date, temp_min, temp_max);
-            futureWeatherList.add(detail);
+    public String foreCastWeather(@PathVariable String cityName, Model model) {
+        try {
+            // Get list forecast weather 5 day of city
+            List<WeatherEntity> lstForecast = getListForeCast(cityName);
+            if(lstForecast != null) {
+                model.addAttribute("cityName", cityName.toUpperCase());
+                model.addAttribute("timeToday", Instant.now());
+                model.addAttribute("detail", lstForecast);
+                return "page_user/weather_detail";
+            }
+        } catch (Exception e) {
+            return "redirect:home-weather?message_forecast=notfound";
         }
-        model.addAttribute("cityName", cityName.toUpperCase());
-
-        model.addAttribute("timeToday", Instant.now());
-        model.addAttribute("detail", futureWeatherList);
-        return "page_user/weather_detail";
+        return "";
     }
+
 
     /**
      * ADD WEATHER
@@ -179,8 +184,7 @@ public class WeatherController {
      */
     @GetMapping("/save-weather/{cityName}")
     private String saveWeather(@PathVariable String cityName) {
-        Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity user = userService.findUserByUsername(authUser.getName());
+        UserEntity user = userService.getUser();
         WeatherEntity currentWeather = weatherService.getJsonWeatherSearch(cityName);
 
         WeatherEntity weather1 = new WeatherEntity(currentWeather.getIcon(), currentWeather.getCityName(),
@@ -212,7 +216,7 @@ public class WeatherController {
      * @param cityName
      * @param userEntity
      */
-    public void insertWeather(String cityName, UserEntity userEntity) {
+    private void insertWeather(String cityName, UserEntity userEntity) {
         WeatherEntity result = weatherService.getJsonWeatherSearch(cityName);
         result.setUser(userEntity);
         weatherService.saveWeather(result);
@@ -227,9 +231,10 @@ public class WeatherController {
     @GetMapping("/update-weather/{cityName}")
     private String updateWeather(@PathVariable String cityName, Model model) {
         UserEntity user = userService.getUser();
+        WeatherEntity currentWeather = weatherService.getJsonWeatherSearch(cityName);
+
         List<WeatherEntity> weatherList = weatherService.getWeatherByUser(user);
         WeatherEntity oldWeather = weatherService.filterWeatherByCity(cityName);
-        WeatherEntity currentWeather = weatherService.getJsonWeatherSearch(cityName);
         //Set New Record for Current Weather
         oldWeather.setIcon(currentWeather.getIcon());
         oldWeather.setTemp(currentWeather.getTemp());

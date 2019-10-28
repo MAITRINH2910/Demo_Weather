@@ -30,7 +30,7 @@ public class MyErrorController implements ErrorController {
      * @return
      */
     @GetMapping("/401")
-    public ModelAndView disableAccount() {
+    private ModelAndView disableAccount() {
         ModelAndView model = new ModelAndView();
         Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
         UserEntity user = userService.findUserByUsername(authUser.getName());
@@ -60,8 +60,8 @@ public class MyErrorController implements ErrorController {
         return model;
     }
 
-    @RequestMapping("/error")
-    public ModelAndView handleError(HttpServletResponse response) {
+    @GetMapping("/error")
+    private ModelAndView handleError(HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView();
 
         if(response.getStatus() == HttpStatus.NOT_FOUND.value()) {

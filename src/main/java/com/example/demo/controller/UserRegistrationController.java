@@ -48,7 +48,6 @@ public class UserRegistrationController {
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
                                       BindingResult result) {
-
         UserEntity emailExisting = userService.findUserByEmail(userDto.getEmail());
         UserEntity usernameExisting = userService.findUserByUsername(userDto.getUsername());
         if (emailExisting != null) {
@@ -60,15 +59,7 @@ public class UserRegistrationController {
         if (result.hasErrors()) {
             return "page_auth/registration";
         }
-
         userService.saveUserDto(userDto);
         return "redirect:/login?success";
-    }
-
-    @PostMapping("/checkUserName")
-    @ResponseBody
-    public String checkExistsByUserName(@RequestParam String userName) {
-        Boolean result = userService.existsByUserName(userName);
-        return "" + result;
     }
 }

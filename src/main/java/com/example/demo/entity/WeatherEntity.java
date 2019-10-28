@@ -65,7 +65,7 @@ public class WeatherEntity {
         this.date = date;
     }
 
-    public WeatherEntity(String icon, String cityName, String description, String wind, String humidity, String pressure, Date date, Double tempMin, Double tempMax) {
+    public WeatherEntity(String icon, String description, String wind, String humidity, String pressure, Date date, Double tempMin, Double tempMax) {
         this.icon = icon;
         this.cityName = cityName;
         this.date = date;

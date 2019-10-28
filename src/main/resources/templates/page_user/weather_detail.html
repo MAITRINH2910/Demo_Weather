@@ -24,7 +24,7 @@
                                             <img style="margin-left:10px;" th:src="*{icon}" class="icon">
                                         </td>
                                         <td class="city_rps" style="width: 200px; height: 50px">
-                                            <b><p class="nameCity" th:text="*{cityName}"></p></b>
+                                            <b><p class="nameCity" th:text="${cityName}"></p></b>
                                             <p th:text="*{#calendars.format(date, 'EE dd MMM')}"
                                                style="color: black"></p>
                                             <div th:if="${#dates.format(detail.date,'MMM dd, yyyy') == #dates.format(timeToday,'MMM dd, yyyy')}">

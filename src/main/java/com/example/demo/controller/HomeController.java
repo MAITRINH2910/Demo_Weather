@@ -1,16 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.transfer.WeatherDTO;
-import com.example.demo.entity.UserEntity;
-import com.example.demo.entity.WeatherEntity;
 import com.example.demo.service.UserService;
 import com.example.demo.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
 
 /**
  * Class HomeController is used to illustrate:
@@ -30,15 +26,7 @@ public class HomeController {
 
     @Autowired
     public WeatherService weatherService;
-//    @GetMapping
-//    public String homePage(Model model) {
-//        UserEntity user = userService.getUserWithIcon();
-//        List<WeatherEntity> listCity = weatherService.getListCityByUser(user);
-//        model.addAttribute("listCities", listCity);
-//        List<List<WeatherEntity>> weatherGroupByCity = weatherService.getListWeatherGroupByCity(user);
-//        model.addAttribute("weatherList0", weatherGroupByCity);
-//        return "page_user/weather_search";
-//    }
+
     /**
      * Show Local Weather
      * @param lat

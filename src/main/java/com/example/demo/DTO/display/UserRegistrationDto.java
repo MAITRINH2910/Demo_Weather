@@ -19,7 +19,7 @@ public class UserRegistrationDto {
     @NotEmpty( message = "{user.lastName.msg}")
     private String lastName;
 
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$", message = "{user.username.msg}")
+    @Pattern(regexp = "^[a-zA-Z0-9]{8,32}$", message = "{user.username.msg}")
     private String username;
 
     @Pattern(regexp = "^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$",  message = "{user.email.msg}")

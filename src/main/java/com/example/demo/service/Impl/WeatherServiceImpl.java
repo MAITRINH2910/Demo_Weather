@@ -243,9 +243,9 @@ public class WeatherServiceImpl implements WeatherService {
      */
     @Override
     public List<WeatherEntity> getListDetailsDTO(List<com.example.demo.DTO.transfer.WeatherPropertyDTO.List> listDetail) throws ParseException {
-        int SIZE_WEATHER_REPEAT = 8;
+        int SIZE_WEATHER_REPEAT = 7;
         List<WeatherEntity> futureWeatherList = new ArrayList<WeatherEntity>();
-        for (int i = 0; i < 40; i += SIZE_WEATHER_REPEAT) {
+        for (int i = 3; i < 40; i += SIZE_WEATHER_REPEAT) {
             futureWeatherList.add(new WeatherEntity((host_http + domain + "/img/w/" + listDetail.get(i).getWeather().get(0).getIcon() + tail_icon_path),
                     listDetail.get(i).getWeather().get(0).getDescription(),
                     listDetail.get(i).getWind().getSpeed(),
